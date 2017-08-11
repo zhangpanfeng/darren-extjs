@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>测试</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body{padding:0px;margin:0px;}
+
+#main {margin:auto;padding:0;background: yellow;width:90%;}
+#layout { height: 300px; width: 80%; background: #99FFcc; margin:auto; height:50px;}
+</style>
+<script>
+    window.onload  = function(){
+        console.log("window is onload");
+    }
+    document.onreadystatechange = function(){
+        if(document.readyState == "complete"){ //当页面加载状态为完全结束时进入 
+          console.log('document is onload');
+        } 
+        if(document.readyState == "interactive"){ //DOM构建了就会执行，先与complete执行
+          console.log('document is interactive ,so DOM obj is '+ document.getElementById('img1'));
+        } 
+
+    };
+</script>
+</head>
+
+<body onload="console.log('body is onload')">
+    测试事件
+    <img src="http://pic5.bbzhi.com/qichebizhi/mingchegaoqingbizhijihe/mingchegaoqingbizhijihe_427614_11.jpg" id='img1'/><br/>
+    <img src="http://image15-c.poco.cn/mypoco/myphoto/20141226/23/6491218420141226234200099_640.jpg?1024x855_120" id='img2' />
+    
+</body>
+</html>

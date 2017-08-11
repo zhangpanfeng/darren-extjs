@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.darren.extjs.dao.CustomerDao">
+    <resultMap id="BaseResultMap" type="com.darren.extjs.entity.Customer">
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="AGE" property="age" jdbcType="SMALLINT" />
+        <result column="GENDER" property="gender" jdbcType="CHAR" />
+        <result column="COMMENT" property="comment" jdbcType="VARCHAR" />
+        <result column="EMAIL_STATE" property="emailState" jdbcType="CHAR" />
+        <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="PAY_STATE" property="payState" jdbcType="CHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+        <result column="DELETE_TIME" property="deleteTime" jdbcType="DATE" />
+    </resultMap>
+    <insert id="insert" parameterType="com.darren.extjs.entity.Customer">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                PHONE,
+            </if>
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="age != 0">
+                AGE,
+            </if>
+            <if test="gender != null">
+                GENDER,
+            </if>
+            <if test="comment != null">
+                COMMENT,
+            </if>
+            <if test="emailState != null">
+                EMAIL_STATE,
+            </if>
+            <if test="sendTime != null">
+                SEND_TIME,
+            </if>
+            <if test="payState != null">
+                PAY_STATE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="deleteTime != null">
+                DELETE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != 0">
+                #{age,jdbcType=SMALLINT},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=CHAR},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="emailState != null">
+                #{emailState,jdbcType=CHAR},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payState != null">
+                #{payState,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="deleteTime != null">
+                #{deleteTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByParameter" parameterType="com.darren.extjs.entity.Customer">
+        update customer
+        <set>
+            <if test="phone != null and phone != ''">
+                PHONE = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name != ''">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != 0">
+                AGE = #{age,jdbcType=SMALLINT},
+            </if>
+            <if test="gender != null and gender != ''">
+                GENDER = #{gender,jdbcType=CHAR},
+            </if>
+            <if test="comment != null">
+                COMMENT = #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="emailState != null and emailState != ''">
+                EMAIL_STATE = #{emailState,jdbcType=CHAR},
+            </if>
+            <if test="sendTime != null">
+                SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payState != null and payState != ''">
+                PAY_STATE = #{payState,jdbcType=CHAR},
+            </if>
+            <if test="deleteTime != null">
+                DELETE_TIME = #{deleteTime,jdbcType=DATE},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="deleteById" parameterType="com.darren.extjs.entity.Customer">
+        update customer
+        set DELETE_TIME = #{deleteTime,jdbcType=DATE}
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select ID, PHONE, NAME,AGE, GENDER, COMMENT, EMAIL_STATE,
+        SEND_TIME, PAY_STATE, CREATE_TIME, DELETE_TIME
+        from customer
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select ID, PHONE, NAME,AGE, GENDER, COMMENT, EMAIL_STATE,
+        SEND_TIME, PAY_STATE, CREATE_TIME, DELETE_TIME
+        from customer where ID = #{id}
+    </select>
+    <select id="selectByParameter" resultMap="BaseResultMap" parameterType="com.darren.extjs.entity.Customer">
+        select ID, PHONE, NAME,AGE, GENDER, COMMENT, EMAIL_STATE,
+        SEND_TIME, PAY_STATE, CREATE_TIME, DELETE_TIME
+        from customer
+        where 1 = 1 and DELETE_TIME is null 
+        <if test="phone != null and phone != ''">
+            and PHONE LIKE "%${phone}%"
+        </if>
+        <if test="name != null and name != ''">
+             and NAME LIKE "%${name}%"
+        </if>
+        limit #{start}, #{limit}
+            <!--
+            <if test="age != 0">
+                and AGE = #{age,jdbcType=SMALLINT}
+            </if>
+            <if test="gender != null and gender != ''">
+                and GENDER = #{gender,jdbcType=CHAR}
+            </if>
+            <if test="comment != null and comment != ''">
+                and COMMENT = #{comment,jdbcType=VARCHAR}
+            </if>
+            <if test="emailState != null and emailState != ''">
+                and EMAIL_STATE = #{emailState,jdbcType=CHAR}
+            </if>
+            <if test="sendTime != null">
+                and SEND_TIME = #{sendTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="payState != null and payState != ''">
+                and PAY_STATE = #{payState,jdbcType=CHAR}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime,jdbcType=DATE}
+            </if>
+            <if test="deleteTime != null">
+                and DELETE_TIME = #{deleteTime,jdbcType=DATE}
+            </if> 
+            -->
+    </select>
+</mapper>
