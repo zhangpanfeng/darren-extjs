@@ -1,0 +1,33 @@
+1、什么是ExtJs
+
+下载：http://cdn.sencha.com/ext/gpl/ext-6.0.1-gpl.zip
+
+2、介绍sample，api
+
+3、helloworld
+
+window.onload
+  当一个文档完全下载到浏览器中时，会触发 window.onload 事件。
+  这意味着页面上的全部元素对 javascript 而言都是可以访问的，
+  这种情况对编写功能性的代码非常有利，因为无需考虑加载的次序。
+  
+$(document).ready()
+  通过 $(document).ready() 注册的事件处理程序，则会在 DOM 完全就绪并可以使用时调用。
+  虽然这也意味着所有元素对脚本而言都是可以访问的，但是，并不意味着所有关联的文件都已经下载完毕。
+  换句话说，当 HTML 下载完成并解析为 DOM 树之后，代码就可以运行。
+
+Ext.onReady()
+?
+
+
+extend
+
+mixins
+
+config
+
+
+
+proxy
+
+
